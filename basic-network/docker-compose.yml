@@ -14,7 +14,7 @@ services:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.billerxchange.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.sales.billerxchange.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/f7bfa3a6064d0db595e7dfa8c4e5f465aacd2ead4800dfeef3a1f900a98720d1_sk
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/04a2a421c7c79dd53d30e0fd4860bc2ce1c9e91f1e82fcdcd3ceb1b518cf1e38_sk
     ports:
       - "7054:7054"
     command: sh -c 'fabric-ca-server start -b admin:adminpw'
@@ -65,8 +65,8 @@ services:
       # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
       # provide the credentials for ledger to connect to CouchDB.  The username and password must
       # match the username and password set for the associated CouchDB.
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+#      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+#      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: peer node start
     # command: peer node start --peer-chaincodedev=true
@@ -78,6 +78,7 @@ services:
         - ./crypto-config/peerOrganizations/sales.billerxchange.com/peers/peer0.sales.billerxchange.com/msp:/etc/hyperledger/msp/peer
         - ./crypto-config/peerOrganizations/sales.billerxchange.com/users:/etc/hyperledger/msp/users
         - ./config:/etc/hyperledger/configtx
+        - ./:/opt/gopath/src/github.com/hyperledger/fabric
     depends_on:
       - orderer.billerxchange.com
       - couchdb
@@ -89,9 +90,9 @@ services:
     image: hyperledger/fabric-couchdb
     # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
     # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
-    environment:
-      - COUCHDB_USER=
-      - COUCHDB_PASSWORD=
+#    environment:
+#      - COUCHDB_USER=
+#      - COUCHDB_PASSWORD=
     ports:
       - 5984:5984
     networks:
